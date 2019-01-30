@@ -1,13 +1,19 @@
-#!/bin/bash -ex
+#!/bin/bash
 
 ARG_TESTS=(
-  "aa"
-  "bb"
-  "ccc dddd"
+  "s3:      repository-s3"
+  "gcs:     repository-gcs"
 )
 
 for ARG_TEST in "${ARG_TESTS[@]}"; do
-  FULL_IMAGE_NAME="${DOCKER_REPO}:${DOCKER_TAG}-${ARG_TEST}"
+  if [[ $ARG_TEST =~ ":" ]]; then
+    ARG_TAG="${ARG_TEST%%:*}"
+    ARG_TEST="${ARG_TEST##*:}"
+    ARG_TEST="${ARG_TEST## }"
+  else
+    ARG_TAG="${ARG_TEST// /-}"
+  fi
+  FULL_IMAGE_NAME="${DOCKER_REPO}:${DOCKER_TAG}-${ARG_TAG}"
   docker build --build-arg ARG_TEST="${ARG_TEST}" -f "${DOCKERFILE_PATH}" -t "${FULL_IMAGE_NAME}" ".${BUILD_PATH}"
   docker push "${FULL_IMAGE_NAME}"
 done
