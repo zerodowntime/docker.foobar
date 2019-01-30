@@ -1,5 +1,13 @@
-#!/bin/bash
+#!/bin/bash -ex
 
-echo "--- BEGIN hook $0 $@"
-env
-echo "--- END hook $0 $@"
+ARG_TESTS=(
+  "aa"
+  "bb"
+  "ccc dddd"
+)
+
+for ARG_TEST in "${ARG_TESTS[@]}"; do
+  FULL_IMAGE_NAME="${DOCKER_REPO}:${DOCKER_TAG}-${ARG_TEST}"
+  docker build --build-arg ARG_TEST="${ARG_TEST}" -f "${DOCKERFILE_PATH}" -t "${FULL_IMAGE_NAME}" ".${BUILD_PATH}"
+  docker push "${FULL_IMAGE_NAME}"
+done

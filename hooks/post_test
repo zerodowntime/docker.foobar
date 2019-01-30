@@ -1,5 +1,0 @@
-#!/bin/bash
-
-echo "--- BEGIN hook $0 $@"
-env
-echo "--- END hook $0 $@"
