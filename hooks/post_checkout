@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 echo "--- BEGIN hook $0 $@"
 env
