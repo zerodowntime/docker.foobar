@@ -1,3 +1,0 @@
-#!/bin/bash
-
-tar -cz /stage | base64
