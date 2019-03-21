@@ -1,1 +1,5 @@
+#!/bin/sh
+
 env
+pwd
+ls -al
