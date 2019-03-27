@@ -4,4 +4,4 @@
 
 ARG CENTOS_VERSION=latest
 
-FROM zerodowntime/centos:$CENTOS_VERSION
+FROM centos:$CENTOS_VERSION
