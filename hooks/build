@@ -8,6 +8,9 @@ else
   EXTRA_TAGS=()
 fi
 
+
+BUILD_PATH="./$BUILD_PATH"
+
 BUILD_ARGS=(
   --build-arg CENTOS_VERSION=7
 )
