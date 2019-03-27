@@ -1,9 +1,5 @@
 #!/bin/bash -ex
 
-source "${0%/*}/env"
-
-BUILD_PATH="./$BUILD_PATH"
-
 if [[ "$DOCKER_TAG" == *,* ]]; then
   IFS=',' read -ra DOCKER_TAGS <<< "$DOCKER_TAG"
   EXTRA_TAGS=("${DOCKER_TAGS[@]:1}")
