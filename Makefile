@@ -9,11 +9,19 @@ BUILD_PATH ?= .
 DOCKERFILE_PATH ?= $(BUILD_PATH)/Dockerfile
 
 COMMA = ,
-SPACE = $() $()
+SPACE ?= $() $()
 ALL_TAGS = $(subst $(COMMA),$(SPACE),$(DOCKER_TAG))
 
+TAG_LIST = $(foreach tag,$(ALL_TAGS),-t "$(DOCKER_REPO):$(tag)")
+
+random-shit: DOCKER_TAG=master,test-master,foobar
+random-shit: build
+	: echo ${TAG_LIST}
+	: echo ${DOCKER_TAG}
+	: echo ${ALL_TAGS}
+
 build:
-	docker image build -t "$(DOCKER_REPO):$(DOCKER_TAG)" $(foreach arg,$(BUILD_ARGS),--build-arg $(arg)) -f "$(DOCKERFILE_PATH)" "$(BUILD_PATH)"
+	: docker image build ${TAG_LIST} $(foreach arg,$(BUILD_ARGS),--build-arg $(arg)) -f "$(DOCKERFILE_PATH)" "$(BUILD_PATH)"
 
 push:
 	docker image push "$(DOCKER_REPO):$(DOCKER_TAG)"
