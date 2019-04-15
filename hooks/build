@@ -1,22 +1,3 @@
-#!/bin/bash -ex
+#!/bin/sh
 
-if [[ "$DOCKER_TAG" == *,* ]]; then
-  IFS=',' read -ra DOCKER_TAGS <<< "$DOCKER_TAG"
-  EXTRA_TAGS=("${DOCKER_TAGS[@]:1}")
-  DOCKER_TAG="${DOCKER_TAGS[0]}"
-else
-  EXTRA_TAGS=()
-fi
-
-
-BUILD_PATH="./$BUILD_PATH"
-
-BUILD_ARGS=(
-  --build-arg CENTOS_VERSION=7
-)
-
-docker image build "${BUILD_ARGS[@]}" -t "$DOCKER_REPO:$DOCKER_TAG" -f "$DOCKERFILE_PATH" "$BUILD_PATH"
-
-for EXTRA_TAG in "${EXTRA_TAGS[@]}"; do
-  docker image tag "$DOCKER_REPO:$DOCKER_TAG" "$DOCKER_REPO:$EXTRA_TAG"
-done
+make build

@@ -5,3 +5,5 @@
 ARG CENTOS_VERSION=latest
 
 FROM centos:$CENTOS_VERSION
+
+ADD Dockerfile /
